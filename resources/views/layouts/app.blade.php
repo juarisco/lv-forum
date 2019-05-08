@@ -77,7 +77,7 @@
             </div>
         </nav>
 
-        {{ request()->path() }}
+        {{-- request()->path() --}}
         @if (!in_array(request()->path(),['login','register','password/email','password/reset']))
             <main class="container py-4">
                 <div class="row">
