@@ -12,6 +12,24 @@
             </div>
             <hr>
             {!! $discussion->content !!}
+            @if ($discussion->bestReply)
+                <div class="card bg-success my-5" style="color:white">
+                    <div class="card-header">
+                        
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <img width="40px" height="40px" style="border-radius:50%" class="mr-2" src="{{ Gravatar::src($discussion->bestReply->owner->email) }}" alt="">
+                                <span class="ml-2">{{ $discussion->bestReply->owner->name }}</span>                
+                            </div>
+                            <div><strong>Best Reply</strong></div>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        {!! $discussion->bestReply->content !!}
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -21,12 +39,21 @@
                 <div class="d-flex justify-content-between">
                     <div>
                         <img width="40px" height="40px" style="border-radius:50%"  src="{{ Gravatar::src($reply->owner->email) }}" alt="">
-                        <span class="ml-2 font-weight-bold">{{ $reply->owner->name }}</span>
+                        <span class="ml-2">{{ $reply->owner->name }}</span>
+                    </div>
+                    <div>@if (auth()->user()->id === $discussion->user_id)
+                        <form action="{{ route('discussions.best-reply', ['discussion'=>$discussion->slug,'reply'=>$reply->id]) }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-primary">mark as best reply</button>
+                        </form>
+                    @endif
                     </div>
                 </div>
 
             </div>
-            <div class="card-body">{!! $reply->content !!}</div>
+            <div class="card-body">
+                {!! $reply->content !!}
+            </div>
         </div>
 
     @endforeach
