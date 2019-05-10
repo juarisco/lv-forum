@@ -2,12 +2,13 @@
 
 namespace LaravelForum\Notifications;
 
+use LaravelForum\Discussion;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use LaravelForum\Discussion;
 
-class NewReplyAdded extends Notification
+class NewReplyAdded extends Notification implements ShouldQueue
 {
     use Queueable;
 
