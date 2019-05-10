@@ -42,12 +42,14 @@
                         <span class="ml-2">{{ $reply->owner->name }}</span>
                     </div>
                     <div>
-                        @if (auth()->user()->id === $discussion->user_id)
-                            <form action="{{ route('discussions.best-reply', ['discussion' => $discussion->slug, 'reply' => $reply->id]) }}" method="post">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-primary">mark as best reply</button>
-                            </form>
-                        @endif
+                        @auth
+                            @if (auth()->user()->id === $discussion->user_id)
+                                <form action="{{ route('discussions.best-reply', ['discussion' => $discussion->slug, 'reply' => $reply->id]) }}" method="post">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-primary">mark as best reply</button>
+                                </form>
+                            @endif                            
+                        @endauth
                     </div>
                 </div>
 
